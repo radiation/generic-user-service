@@ -1,9 +1,9 @@
 import os
 
-from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from app.models import Base
+from alembic import context
+from app.models.base import Base
 
 config = context.config
 

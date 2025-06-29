@@ -3,7 +3,8 @@ from typing import Optional
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models import Base, User
+from .base import Base
+from .user import User
 
 
 class Group(Base):
