@@ -1,14 +1,16 @@
 import uuid
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import Boolean, Index, String
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
-from .group import Group
 from .relationships import group_users, user_roles
-from .role import Role
+
+if TYPE_CHECKING:
+    from .group import Group
+    from .role import Role
 
 
 class User(Base):
