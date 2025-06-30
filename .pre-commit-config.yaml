@@ -22,6 +22,7 @@ repos:
     rev: v1.5.1
     hooks:
     -   id: mypy
+        exclude: '^alembic/.*$'
         args:
             - --config-file
             - mypy.ini
@@ -32,6 +33,7 @@ repos:
     rev: v3.0.3
     hooks:
     -   id: pylint
+        exclude: '^alembic/.*$'
         args:
             - --rcfile
             - .pylintrc

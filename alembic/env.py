@@ -28,11 +28,8 @@ def get_url() -> str:
 
 def run_migrations_online() -> None:
     alembic_cfg = context.config
-
-    # 1) Inject your dynamic URL
     alembic_cfg.set_main_option("sqlalchemy.url", get_url())
 
-    # 2) Now build the engine from that config
     connectable = engine_from_config(
         alembic_cfg.get_section(alembic_cfg.config_ini_section, {}),
         prefix="sqlalchemy.",

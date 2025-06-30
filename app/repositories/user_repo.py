@@ -1,0 +1,35 @@
+from typing import Optional, cast
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+
+from app.models.user import User
+
+from .base_repo import BaseRepository
+
+
+class UserRepository(BaseRepository[User]):
+    def __init__(self, db: AsyncSession):
+        super().__init__(model=User, db=db)
+
+    async def create_user(self, email: str, hashed_password: str) -> User:
+        user = User(email=email, hashed_password=hashed_password)
+        self.db.add(user)
+        await self.db.commit()
+        await self.db.refresh(user)
+        return user
+
+    async def get_user_by_email(self, email: str) -> Optional[User]:
+        stmt = select(User).where(User.email == email)
+        result = await self.db.execute(stmt)
+        return result.scalars().first()
+
+    async def get_user_by_id(self, user_id: int) -> Optional[User]:
+        stmt = select(User).where(User.id == user_id)
+        result = await self.db.execute(stmt)
+        return result.scalars().first()
+
+    async def get_users(self) -> list[User]:
+        stmt = select(User)
+        result = await self.db.execute(stmt)
+        return cast(list[User], result.scalars().all())
